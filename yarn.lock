@@ -249,6 +249,11 @@ braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+buffer-readable@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/buffer-readable/-/buffer-readable-1.0.3.tgz#87e599cc3aa82077f7c0ea04e152f875152094ec"
+  integrity sha512-Oewz9tWMOOHruTADCPLfghgoE3GvLvA3Aqotnxr+x67vtpPC2iySOhA5BfsB1+SC6aHlHiMvElERqfOCJGJhDw==
+
 bytes@3.1.2, bytes@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
@@ -750,6 +755,15 @@ koa-logger@^3.2.1:
     humanize-number "0.0.2"
     passthrough-counter "^1.0.0"
 
+koa-range-static@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/koa-range-static/-/koa-range-static-1.3.0.tgz#c3eaadd66397084fe2460df0bfcfd2337cbcc907"
+  integrity sha512-45WRYzW/0NurtN02/N3hF8D8FxTcFEj3Pm0YskFZ0eboT9KWW/lV4DYjk6am14OgfuJ2Ti9ReL+BqnE24lcsXA==
+  dependencies:
+    buffer-readable "^1.0.3"
+    mime-types "^2.1.35"
+    multi-readable "^1.1.0"
+
 koa-router@^11.0.2:
   version "11.0.2"
   resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-11.0.2.tgz#a9eb06271cce3435c3662a354c3963ec77095913"
@@ -822,7 +836,7 @@ mime-db@1.52.0:
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
 
-mime-types@^2.1.12, mime-types@^2.1.18, mime-types@~2.1.24, mime-types@~2.1.34:
+mime-types@^2.1.12, mime-types@^2.1.18, mime-types@^2.1.35, mime-types@~2.1.24, mime-types@~2.1.34:
   version "2.1.35"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
@@ -860,6 +874,11 @@ ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
+
+multi-readable@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/multi-readable/-/multi-readable-1.1.0.tgz#6c6cd6571b8fb21d8f6002864a578d8668be558d"
+  integrity sha512-A+V/VavZsJZMJZ/hdlT7YG+iGOrQpQKHO/BB8vCike4eRZLfhnP7jq93oTqj28QEod+jewYh8YqIP9Y4g6uKnQ==
 
 negotiator@0.6.3:
   version "0.6.3"

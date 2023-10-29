@@ -1,17 +1,17 @@
 import { Context } from "koa";
-import { getPaths } from '../consts';
+import { currRunning, getPaths } from '../consts';
 import { exists, isLocked, isProcessing, readError } from '../util';
-import { createGunzip } from 'zlib';
 import { createReadStream } from 'fs';
 import { startCalculation } from '../calculation';
-import { CountQueuingStrategy } from 'stream/web';
+import { send } from "koa-range-static";
+import path = require('path');
 
-export async function calculateOrbitalAction(context: Context) {
-    const download = context.search.includes("download")
+export async function calculateOrbitalAction(ctx: Context) {
+    const download = ctx.search.includes("download")
 
-    const idStr = context.params.id;
+    const idStr = ctx.params.id;
     if (isNaN(idStr) || typeof idStr !== "string")
-        return context.assert(false, 400, "Invalid id given.")
+        return ctx.assert(false, 400, "Invalid id given.")
 
     const cid = parseInt(idStr)
     const paths = getPaths(cid)
@@ -23,32 +23,41 @@ export async function calculateOrbitalAction(context: Context) {
     const invalidState = locked && orcaExists
     const error = await readError(cid)
 
-    context.assert(!invalidState, 500, "Could not calculate, a error ocurred")
+    console.log(currRunning)
+    ctx.assert(!invalidState, 500, "Could not calculate, a error ocurred")
     if (error) {
-        context.status = 500
-        context.body = error
+        ctx.status = 500
+        ctx.body = error
         return
     }
 
-    context.type = "text/plain"
+    const relative = path.relative(path.resolve(), paths.orca)
+
+    ctx.type = "text/plain"
+    console.log(locked, processing, orcaExists, download)
     if (orcaExists && !processing) {
         if(download) {
-            context.type = "application/octet-stream"
-            context.attachment(`${cid}-orbitals.out`)
+            ctx.type = "application/octet-stream"
+            ctx.attachment(`${cid}-orbitals.out`)
         }
-        context.body = createReadStream(paths.orca)
 
+        await send(ctx, relative, { immutable: false })
         return;
     }
 
-    context.status = 202
+    ctx.status = 202
     if (!orcaExists && !locked && !processing) {
-        context.status = 201
+        ctx.status = 201
+        ctx.set("x-processing", "true")
         await startCalculation(cid)
     }
 
-    if (orcaExists)
-        return context.body = createReadStream(paths.orca)
+    if (orcaExists) {
+        ctx.set("x-processing", "true")
+        await send(ctx, relative, { immutable: false })
+        return
+    }
 
-    context.body = "No calculation results yet."
+    ctx.set("x-processing", "true")
+    ctx.body = "No calculation results yet."
 }
